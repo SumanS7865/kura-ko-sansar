@@ -1382,54 +1382,6 @@
       </p>
 
       <div class="price-display">
-
-        <!-- COUNTDOWN TIMER -->
-        <div style="margin-bottom:20px; animation: fadeUp 0.6s 0.4s ease both;">
-          <div
-            style="display:inline-flex; flex-direction:column; align-items:center; gap:8px; background:rgba(232,160,0,0.08); border:1px solid rgba(255,215,0,0.25); border-radius:14px; padding:16px 28px;">
-            <div
-              style="font-size:0.75em; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted);">
-              🔥 Launch Offer सकिँदैछ — NPR 499 हुन्छ
-            </div>
-            <div style="display:flex; gap:12px; align-items:center;">
-              <div style="text-align:center;">
-                <div id="timer-days"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:var(--gold); line-height:1;">00
-                </div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Days</div>
-              </div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:2em; color:var(--gold); opacity:0.5;">:</div>
-              <div style="text-align:center;">
-                <div id="timer-hours"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:var(--gold); line-height:1;">00
-                </div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Hours</div>
-              </div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:2em; color:var(--gold); opacity:0.5;">:</div>
-              <div style="text-align:center;">
-                <div id="timer-mins"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:var(--gold); line-height:1;">00
-                </div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Mins</div>
-              </div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:2em; color:var(--gold); opacity:0.5;">:</div>
-              <div style="text-align:center;">
-                <div id="timer-secs"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:#ff6b6b; line-height:1;">00</div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Secs</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="price-main">NPR 149 <span>/ lifetime</span></div>
         <p class="price-note">🔥 Launch offer — limited time</p>
       </div>
@@ -1992,7 +1944,7 @@
       const KEY = 'kks_timer_end';
       let end = localStorage.getItem(KEY);
 
-      if (!end || isNaN(end)) {
+      if (!end || isNaN(end) || Number(end) <= Date.now()) {
         end = Date.now() + 2 * 24 * 60 * 60 * 1000;
         localStorage.setItem(KEY, end);
       }
