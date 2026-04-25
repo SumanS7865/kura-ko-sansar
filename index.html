@@ -1384,54 +1384,6 @@
       <div class="price-display">
         <span class="price-orig">NPR 499</span>
         <div class="price-main">NPR 149 <span>/ lifetime</span></div>
-
-        <!-- COUNTDOWN TIMER -->
-        <div style="margin:16px 0 8px;">
-          <div
-            style="display:inline-flex; flex-direction:column; align-items:center; gap:8px; background:rgba(232,160,0,0.08); border:1px solid rgba(255,215,0,0.25); border-radius:14px; padding:16px 28px;">
-            <div
-              style="font-size:0.72em; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted);">
-              🔥 Offer सकिँदैछ — NPR 499 हुन्छ
-            </div>
-            <div style="display:flex; gap:12px; align-items:center;">
-              <div style="text-align:center;">
-                <div id="timer-days"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:var(--gold); line-height:1;">02
-                </div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Days</div>
-              </div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:2em; color:var(--gold); opacity:0.5;">:</div>
-              <div style="text-align:center;">
-                <div id="timer-hours"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:var(--gold); line-height:1;">00
-                </div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Hours</div>
-              </div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:2em; color:var(--gold); opacity:0.5;">:</div>
-              <div style="text-align:center;">
-                <div id="timer-mins"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:var(--gold); line-height:1;">00
-                </div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Mins</div>
-              </div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:2em; color:var(--gold); opacity:0.5;">:</div>
-              <div style="text-align:center;">
-                <div id="timer-secs"
-                  style="font-family:'Bebas Neue',sans-serif; font-size:2.2em; color:#ff6b6b; line-height:1;">00</div>
-                <div
-                  style="font-size:0.65em; color:var(--text-muted); font-weight:700; letter-spacing:1px; text-transform:uppercase;">
-                  Secs</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <p class="price-note">🔥 Launch offer — limited time</p>
       </div>
 
@@ -2030,29 +1982,6 @@
       tick();
       setInterval(tick, 1000);
     })();
-    // COUNTDOWN TIMER
-    document.addEventListener('DOMContentLoaded', function () {
-      const KEY = 'kks_timer_end';
-      let end = localStorage.getItem(KEY);
-      if (!end || isNaN(Number(end)) || Number(end) <= Date.now()) {
-        end = Date.now() + 2 * 24 * 60 * 60 * 1000;
-        localStorage.setItem(KEY, String(end));
-      }
-      end = Number(end);
-      function tick() {
-        const diff = end - Date.now();
-        const d = diff <= 0 ? 0 : Math.floor(diff / 86400000);
-        const h = diff <= 0 ? 0 : Math.floor((diff % 86400000) / 3600000);
-        const m = diff <= 0 ? 0 : Math.floor((diff % 3600000) / 60000);
-        const s = diff <= 0 ? 0 : Math.floor((diff % 60000) / 1000);
-        document.getElementById('timer-days').textContent = String(d).padStart(2, '0');
-        document.getElementById('timer-hours').textContent = String(h).padStart(2, '0');
-        document.getElementById('timer-mins').textContent = String(m).padStart(2, '0');
-        document.getElementById('timer-secs').textContent = String(s).padStart(2, '0');
-      }
-      tick();
-      setInterval(tick, 1000);
-    });
   </script>
 </body>
 
