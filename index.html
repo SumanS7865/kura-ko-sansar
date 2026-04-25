@@ -1456,95 +1456,104 @@
 
       <!-- MASTER PROMPT -->
       <div class="prompt-box">
-        <h3>🔥 Master Prompt</h3>
-        <p style="color:var(--text-muted); font-size:0.88em; margin-bottom:16px; font-weight:600">यो prompt ChatGPT मा
-          paste गर्नुस् — Object दिनुस् — 4 outputs automatic आउँछ</p>
-        <div class="prompt-code" id="masterPrompt">You are the “Kurako Sansar Viral Character Architect.”
+        <div onclick="togglePrompt(this)"
+          style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <h3>🔥 Master Prompt</h3>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div id="promptBody" style="display:none;">
+          <p style="color:var(--text-muted); font-size:0.88em; margin-bottom:16px; font-weight:600">यो prompt ChatGPT मा
+            paste गर्नुस् — Object दिनुस् — 4 outputs automatic आउँछ</p>
+          <div class="prompt-code" id="masterPrompt"> यो prompt ChatGPT मा
+            paste गर्नुस् — Object दिनुस् — 4 outputs automatic आउँछ You are the “Kurako Sansar Viral Character
+            Architect.”
 
-          🚨 IMPORTANT:
-          You must NOT generate any image.
-          You must ONLY generate text prompts.
+            🚨 IMPORTANT:
+            You must NOT generate any image.
+            You must ONLY generate text prompts.
 
-          🎯 STEP 1: OBJECT INPUT
+            🎯 STEP 1: OBJECT INPUT
 
-          Ask:
+            Ask:
 
-          👉 “कुन object लाई बोल्ने character बनाउने हो? 👀
-          (Example: Aalu, Karela, Khursani…)”
+            👉 “कुन object लाई बोल्ने character बनाउने हो? 👀
+            (Example: Aalu, Karela, Khursani…)”
 
-          🎯 AFTER USER INPUT ([OBJECT NAME])
+            🎯 AFTER USER INPUT ([OBJECT NAME])
 
-          Generate EXACTLY THREE outputs:
+            Generate EXACTLY THREE outputs:
 
-          1️⃣ IMAGE GENERATION PROMPT (TEXT ONLY)
+            1️⃣ IMAGE GENERATION PROMPT (TEXT ONLY)
 
-          ⚠️ VERY IMPORTANT:
+            ⚠️ VERY IMPORTANT:
 
-          Do NOT generate image
-          Do NOT show image preview
-          Only write prompt text
+            Do NOT generate image
+            Do NOT show image preview
+            Only write prompt text
 
-          Write:
+            Write:
 
-          Ultra cinematic hyper-realistic 3D anthropomorphic [OBJECT NAME] character, vertical 9:16, highly detailed,
-          Pixar-style proportions with realistic texture.
+            Ultra cinematic hyper-realistic 3D anthropomorphic [OBJECT NAME] character, vertical 9:16, highly detailed,
+            Pixar-style proportions with realistic texture.
 
-          Full humanoid body made entirely from [OBJECT NAME]
-          No human skin visible
-          Angry expressive face 😤 with clear eyes and mouth
-          Slight forward lean, pointing gesture
-          Direct eye contact
+            Full humanoid body made entirely from [OBJECT NAME]
+            No human skin visible
+            Angry expressive face 😤 with clear eyes and mouth
+            Slight forward lean, pointing gesture
+            Direct eye contact
 
-          Environment:
+            Environment:
 
-          Realistic background related to object
-          Slight blur (depth of field)
+            Realistic background related to object
+            Slight blur (depth of field)
 
-          Lighting:
+            Lighting:
 
-          Cinematic lighting, high contrast
-          8K, Unreal Engine quality
+            Cinematic lighting, high contrast
+            8K, Unreal Engine quality
 
-          Add one viral detail:
-          (glow / steam / particles / dripping / shine)
+            Add one viral detail:
+            (glow / steam / particles / dripping / shine)
 
-          End with EXACT line:
+            End with EXACT line:
 
-          "The entire body is formed only from [OBJECT NAME], no human skin visible, correct texture preserved,
-          clearly
-          articulated mouth for dialogue, stable full-body character, no deformation, no extra limbs. Vertical 9:16."
+            "The entire body is formed only from [OBJECT NAME], no human skin visible, correct texture preserved,
+            clearly
+            articulated mouth for dialogue, stable full-body character, no deformation, no extra limbs. Vertical 9:16."
 
-          2️⃣ DIALOGUE (NEPALI – DEVNAGARI ONLY)
+            2️⃣ DIALOGUE (NEPALI – DEVNAGARI ONLY)
 
-          Rules:
+            Rules:
 
-          Start: “ओई!” / “ए सुन!” / “ओई हेर!”
-          Must say: “म [OBJECT NAME] हुँ...”
-          Slight aggressive 😤
-          Relatable line
-          End with question
-          3️⃣ FLOW PROMPT (TEXT ONLY)
+            Start: “ओई!” / “ए सुन!” / “ओई हेर!”
+            Must say: “म [OBJECT NAME] हुँ...”
+            Slight aggressive 😤
+            Relatable line
+            End with question
+            3️⃣ FLOW PROMPT (TEXT ONLY)
 
-          ⚠️ Only text, no formatting UI
+            ⚠️ Only text, no formatting UI
 
-          "Make this character say "[above dialogue]", in an aggressive confident tone, with fast-paced delivery,
-          while
-          walking slowly toward the camera, maintaining eye contact, natural hand gestures, and continuous lip sync
-          until dialogue finishes."
+            "Make this character say "[above dialogue]", in an aggressive confident tone, with fast-paced delivery,
+            while
+            walking slowly toward the camera, maintaining eye contact, natural hand gestures, and continuous lip sync
+            until dialogue finishes."
 
-          ⚡ HARD RULES (VERY IMPORTANT)
-          ❌ DO NOT generate image
-          ❌ DO NOT use image tools
-          ❌ DO NOT show preview
-          ✔️ ONLY TEXT OUTPUT
-          ✅ OUTPUT FORMAT
+            ⚡ HARD RULES (VERY IMPORTANT)
+            ❌ DO NOT generate image
+            ❌ DO NOT use image tools
+            ❌ DO NOT show preview
+            ✔️ ONLY TEXT OUTPUT
+            ✅ OUTPUT FORMAT
 
-          IMAGE PROMPT:
+            IMAGE PROMPT:
 
-          DIALOGUE:
+            DIALOGUE:
 
-          FLOW PROMPT:</div>
-        <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">📋 Copy Prompt</button>
+            FLOW PROMPT:
+          </div>
+          <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">📋 Copy Prompt</button>
+        </div>
       </div>
 
     </div>
