@@ -1558,7 +1558,7 @@
         delete window[cbName];
         callback(data);
       };
-      script.src = SHEET_API_URL + '?phone=' + phone + '&callback=' + cbName;
+      script.src = SHEET_API_URL + '?phone=' + phone + '&action=submit&callback=' + cbName;
       document.head.appendChild(script);
     }
 
@@ -1712,7 +1712,7 @@
         }
       };
 
-      script.src = SHEET_API_URL + '?phone=' + phone + '&callback=' + callbackName;
+      script.src = SHEET_API_URL + '?phone=' + phone + '&action=submit&callback=' + callbackName;
       document.head.appendChild(script);
     }
 
