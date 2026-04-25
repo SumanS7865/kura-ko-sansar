@@ -1939,6 +1939,46 @@
         arrow.classList.remove('open');
       }
     }
+
+    // ═══════════════════════════════════
+    // COUNTDOWN TIMER — 2 days set गर्नुस्
+    // ═══════════════════════════════════
+    (function () {
+      const STORAGE_KEY = 'kks_deadline';
+      let deadline = localStorage.getItem(STORAGE_KEY);
+
+      if (!deadline) {
+        // पहिलो पटक — अहिलेबाट 2 दिन
+        deadline = new Date().getTime() + (2 * 24 * 60 * 60 * 1000);
+        localStorage.setItem(STORAGE_KEY, deadline);
+      }
+
+      function updateTimer() {
+        const now = new Date().getTime();
+        const remaining = parseInt(deadline) - now;
+
+        if (remaining <= 0) {
+          document.getElementById('timer-days').textContent = '00';
+          document.getElementById('timer-hours').textContent = '00';
+          document.getElementById('timer-mins').textContent = '00';
+          document.getElementById('timer-secs').textContent = '00';
+          return;
+        }
+
+        const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const mins = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((remaining % (1000 * 60)) / 1000);
+
+        document.getElementById('timer-days').textContent = String(days).padStart(2, '0');
+        document.getElementById('timer-hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('timer-mins').textContent = String(mins).padStart(2, '0');
+        document.getElementById('timer-secs').textContent = String(secs).padStart(2, '0');
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    })();
   </script>
 </body>
 
