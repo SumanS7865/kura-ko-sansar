@@ -931,6 +931,16 @@
         flex-wrap: wrap;
       }
     }
+
+    .toggle-arrow {
+      color: var(--gold);
+      font-size: 1.2em;
+      transition: transform 0.3s;
+    }
+
+    .toggle-arrow.open {
+      transform: rotate(180deg);
+    }
   </style>
 </head>
 
@@ -1371,52 +1381,77 @@
 
       <!-- Introduction -->
       <div class="lesson-block">
-        <div class="lesson-header">
-          <div class="lesson-num-badge">0</div>
-          <h3>Introduction — Course Overview</h3>
+        <div class="lesson-header" onclick="toggleLesson(this)"
+          style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="lesson-num-badge">0</div>
+            <h3>Introduction — Course Overview</h3>
+          </div>
+          <span class="toggle-arrow open">▼</span>
         </div>
-        <!-- ✏️ YouTube ID replace गर्नुस् -->
-        <iframe src="https://www.youtube.com/embed/d9-a6w6Uqok?rel=0" allowfullscreen></iframe>
+        <div class="lesson-body" style="display:block;">
+          <iframe src="https://www.youtube.com/embed/d9-a6w6Uqok?rel=0" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- Chapter 1 -->
       <div class="lesson-block">
-        <div class="lesson-header">
-          <div class="lesson-num-badge">1</div>
-          <h3>Chapter 1 — Viral Prompt System (ChatGPT → Image → Video)</h3>
+        <div class="lesson-header" onclick="toggleLesson(this)"
+          style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="lesson-num-badge">1</div>
+            <h3>Chapter 1 — Viral Prompt System (ChatGPT → Image → Video)</h3>
+          </div>
+          <span class="toggle-arrow">▼</span>
         </div>
-        <!-- ✏️ YouTube ID replace गर्नुस् -->
-        <iframe src="https://www.youtube.com/embed/gaI4VSqKV2k?rel=0" allowfullscreen></iframe>
+        <div class="lesson-body" style="display:none;">
+          <iframe src="https://www.youtube.com/embed/gaI4VSqKV2k?rel=0" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- Chapter 2 -->
       <div class="lesson-block">
-        <div class="lesson-header">
-          <div class="lesson-num-badge">2</div>
-          <h3>Chapter 2 — Inspiration Method</h3>
+        <div class="lesson-header" onclick="toggleLesson(this)"
+          style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="lesson-num-badge">2</div>
+            <h3>Chapter 2 — Inspiration Method</h3>
+          </div>
+          <span class="toggle-arrow">▼</span>
         </div>
-        <!-- ✏️ YouTube ID replace गर्नुस् -->
-        <iframe src="https://www.youtube.com/embed/YOUR_CH2_ID?rel=0" allowfullscreen></iframe>
+        <div class="lesson-body" style="display:none;">
+          <iframe src="https://www.youtube.com/embed/YOUR_CH2_ID?rel=0" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- Chapter 3 -->
       <div class="lesson-block">
-        <div class="lesson-header">
-          <div class="lesson-num-badge">3</div>
-          <h3>Chapter 3 — CapCut Editing</h3>
+        <div class="lesson-header" onclick="toggleLesson(this)""
+        style=" cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="lesson-num-badge">3</div>
+            <h3>Chapter 3 — CapCut Editing</h3>
+          </div>
+          <span class="toggle-arrow">▼</span>
         </div>
-        <!-- ✏️ YouTube ID replace गर्नुस् -->
-        <iframe src="https://www.youtube.com/embed/k5e2gzdQ-iw?rel=0" allowfullscreen></iframe>
+        <div class="lesson-body" style="display:none;">
+          <iframe src="https://www.youtube.com/embed/k5e2gzdQ-iw?rel=0" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- Chapter 4 -->
       <div class="lesson-block">
-        <div class="lesson-header">
-          <div class="lesson-num-badge" style="background:linear-gradient(135deg,#9333EA,#7C3AED); color:white">4</div>
-          <h3>Chapter 4 — 🎁 Surprise Bonus: Free Pro Tools Trick</h3>
+        <div class="lesson-header" onclick="toggleLesson(this)""
+        style=" cursor:pointer;display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div class="lesson-num-badge">3</div>
+            <h3>Chapter 4 — 🎁 Surprise Bonus: Free Pro Tools Trick</h3>
+          </div>
+          <span class="toggle-arrow">▼</span>
         </div>
-        <!-- ✏️ YouTube ID replace गर्नुस् -->
-        <iframe src="https://www.youtube.com/embed/Ug5XLngXw1I?rel=0" allowfullscreen></iframe>
+        <div class="lesson-body" style="display:none;">
+          <iframe src="https://www.youtube.com/embed/Ug5XLngXw1I?rel=0" allowfullscreen></iframe>
+        </div>
       </div>
 
       <!-- MASTER PROMPT -->
@@ -1475,7 +1510,8 @@
 
           End with EXACT line:
 
-          "The entire body is formed only from [OBJECT NAME], no human skin visible, correct texture preserved, clearly
+          "The entire body is formed only from [OBJECT NAME], no human skin visible, correct texture preserved,
+          clearly
           articulated mouth for dialogue, stable full-body character, no deformation, no extra limbs. Vertical 9:16."
 
           2️⃣ DIALOGUE (NEPALI – DEVNAGARI ONLY)
@@ -1491,7 +1527,8 @@
 
           ⚠️ Only text, no formatting UI
 
-          "Make this character say "[above dialogue]", in an aggressive confident tone, with fast-paced delivery, while
+          "Make this character say "[above dialogue]", in an aggressive confident tone, with fast-paced delivery,
+          while
           walking slowly toward the camera, maintaining eye contact, natural hand gestures, and continuous lip sync
           until dialogue finishes."
 
@@ -1770,6 +1807,17 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    function toggleLesson(header) {
+      const body = header.nextElementSibling;
+      const arrow = header.querySelector('.toggle-arrow');
+      if (body.style.display === 'none') {
+        body.style.display = 'block';
+        arrow.classList.add('open');
+      } else {
+        body.style.display = 'none';
+        arrow.classList.remove('open');
+      }
+    }
   </script>
 </body>
 
