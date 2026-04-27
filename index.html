@@ -1664,6 +1664,59 @@
         </div>
       </div>
 
+      <!-- MASTER PROMPT 2 -->
+      <div class="prompt-box">
+        <div onclick="togglePrompt(this)"
+          style="cursor:pointer;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <h3>🔥 Clash of Eras Master Prompt</h3>
+          <span class="toggle-arrow">▼</span>
+        </div>
+        <div id="promptBody" style="display:none;">
+          <p style="color:var(--text-muted); font-size:0.88em; margin-bottom:16px; font-weight:600"></p>
+          <div class="prompt-code" id="masterPrompt">Role: You are an expert Creative Director for a 3D Animation Studio
+            specializing in "Pixar-style" vertical (9:16) content for social media.
+
+            Task: Follow these 4 STEPS sequentially to create a high-engagement 3D character video series.
+
+            Step 1: Idea Generation
+            Propose 3 unique "Clash of Eras" concepts (e.g., Traditional vs. Modern, Local vs. Foreign) using
+            anthropomorphic objects from daily life (e.g., Matka vs. Fridge, Broom vs. Vacuum, Candle vs. LED).
+
+            Step 2: Script & Dialogues (Devanagari)
+            Once a concept is chosen, write a witty and emotional 24-second script divided into three 8-second segments.
+            Provide the dialogues in Devanagari (Nepali/Hindi).
+
+            Segment 1: Interaction/Taunt
+
+            Segment 2: Rebuttal/Show-off
+
+            Segment 3: Conclusion/Deep Wisdom
+
+            Step 3: Image Generation Prompts (9:16)
+            Generate 3 highly detailed visual prompts (not the actual images, but descriptive text to use in an AI Image
+            Generator like Midjourney or DALL-E 3).
+
+            Style: 3D Pixar-style, cinematic lighting, hyper-realistic textures (rough stone, glossy plastic, etc.),
+            rustic backgrounds.
+
+            Technical: Must include "9:16 aspect ratio" and "8k resolution."
+
+            Step 4: Flow AI Animation Prompts
+            For each of the 3 images, provide a specific "Video Generation Prompt" for Flow AI. Include instructions
+            for:
+
+            Character lip-syncing and facial expressions.
+
+            Specific body movements (vibrations, nodding, etc.).
+
+            Mention the dialogue that needs to be synchronized in that segment.
+
+            Constraint: Always maintain the "Kurako Sansar" aesthetic—traditional vibes mixed with modern 3D flair.
+          </div>
+          <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">📋 Copy Prompt</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
