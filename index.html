@@ -1671,9 +1671,10 @@
           <h3>🔥 Clash of Eras Master Prompt</h3>
           <span class="toggle-arrow">▼</span>
         </div>
-        <div id="promptBody" style="display:none;">
+        <div id="promptBody2" style="display:none;">
           <p style="color:var(--text-muted); font-size:0.88em; margin-bottom:16px; font-weight:600"></p>
-          <div class="prompt-code" id="masterPrompt">Role: You are an expert Creative Director for a 3D Animation Studio
+          <div class="prompt-code" id="masterPrompt2">Role: You are an expert Creative Director for a 3D Animation
+            Studio
             specializing in "Pixar-style" vertical (9:16) content for social media.
 
             Task: Follow these 4 STEPS sequentially to create a high-engagement 3D character video series.
@@ -1713,7 +1714,7 @@
 
             Constraint: Always maintain the "Kurako Sansar" aesthetic—traditional vibes mixed with modern 3D flair.
           </div>
-          <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">📋 Copy Prompt</button>
+          <button class="copy-btn" id="copyBtn2" onclick="copyPrompt2()">📋 Copy Prompt</button>
         </div>
       </div>
 
@@ -2043,6 +2044,15 @@
       tick();
       setInterval(tick, 1000);
     })();
+
+    function copyPrompt2() {
+      const text = document.getElementById('masterPrompt2').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn2');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2500);
+      });
+    }
   </script>
 </body>
 
