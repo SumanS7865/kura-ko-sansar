@@ -1991,7 +1991,7 @@
       }
     }
     function togglePrompt(header) {
-      const body = document.getElementById('promptBody');
+      const body = header.nextElementSibling;
       const arrow = header.querySelector('.toggle-arrow');
       if (body.style.display === 'none') {
         body.style.display = 'block';
