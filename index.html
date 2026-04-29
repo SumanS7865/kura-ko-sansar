@@ -1587,10 +1587,7 @@
           <span class="toggle-arrow">▼</span>
         </div>
         <div class="lesson-body" style="display:none;">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/gaI4VSqKV2k?rel=0&modestbranding=1&iv_load_policy=3&disablekb=1"
-            allowfullscreen style="pointer-events:auto;">
-          </iframe>
+          <div class="video-placeholder" data-chapter="1"></div>
         </div>
       </div>
 
@@ -1605,7 +1602,7 @@
           <span class="toggle-arrow">▼</span>
         </div>
         <div class="lesson-body" style="display:none;">
-          <iframe src="https://www.youtube.com/embed/QZLWzbamvzI?rel=0" allowfullscreen></iframe>
+          <div class="video-placeholder" data-chapter="2"></div>
         </div>
       </div>
 
@@ -1620,7 +1617,7 @@
           <span class="toggle-arrow">▼</span>
         </div>
         <div class="lesson-body" style="display:none;">
-          <iframe src="https://www.youtube.com/embed/k5e2gzdQ-iw?rel=0" allowfullscreen></iframe>
+          <div class="video-placeholder" data-chapter="3"></div>
         </div>
       </div>
 
@@ -1635,7 +1632,7 @@
           <span class="toggle-arrow">▼</span>
         </div>
         <div class="lesson-body" style="display:none;">
-          <iframe src="https://www.youtube.com/embed/Ug5XLngXw1I?rel=0" allowfullscreen></iframe>
+          <div class="video-placeholder" data-chapter="4"></div>
         </div>
       </div>
 
@@ -1821,6 +1818,7 @@
     // UNLOCK FUNCTION — course देखाउने
     // ═══════════════════════════════════════════════════════
     function unlockCourse() {
+      loadVideos();
       document.getElementById('course-content').style.display = 'block';
       document.querySelector('.access-section').style.display = 'none';
       document.getElementById('payment').style.display = 'none';
@@ -2126,6 +2124,22 @@
         const btn = document.getElementById('copyBtn2');
         btn.textContent = '✅ Copied!';
         setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2500);
+      });
+    }
+    const vids = {
+      1: atob('Z2FJNFZTcUtWMms'),
+      2: atob('UVpMV3piYW12ekk'),
+      3: atob('azVlMmd6ZFEtaXc'),
+      4: atob('VWc1WExuZ1h3MUk')
+    };
+
+    function loadVideos() {
+      document.querySelectorAll('.video-placeholder').forEach(el => {
+        const ch = el.getAttribute('data-chapter');
+        const id = vids[ch];
+        if (id) {
+          el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none;"></iframe>`;
+        }
       });
     }
   </script>
