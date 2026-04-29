@@ -2081,7 +2081,7 @@
       let end = localStorage.getItem(KEY);
 
       if (!end || isNaN(end) || Number(end) <= Date.now()) {
-        end = Date.now() + 2 * 24 * 60 * 60 * 1000;
+        end = Date.now() + 4 * 24 * 60 * 60 * 1000;
         localStorage.setItem(KEY, end);
       }
 
