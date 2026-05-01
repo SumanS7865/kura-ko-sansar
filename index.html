@@ -11,8 +11,7 @@
     rel="stylesheet">
 
   <script>
-    if (window.location.hash === '#unlocked' ||
-      localStorage.getItem('kks_access') === 'true') {
+    if (localStorage.getItem('kks_access') === 'true') {
       document.documentElement.setAttribute('data-unlocked', 'true');
     }
   </script>
@@ -1796,7 +1795,6 @@
     function isUnlocked() {
       return localStorage.getItem('kks_access') === 'true' ||
         sessionStorage.getItem('kks_access') === 'true' ||
-        window.location.hash === '#unlocked';
     }
 
     function loadVideos() {
@@ -1823,7 +1821,6 @@
     function unlockCourse() {
       localStorage.setItem('kks_access', 'true');
       sessionStorage.setItem('kks_access', 'true');
-      window.location.hash = 'unlocked';
       showCourse();
       closeModal();
       window.scrollTo({ top: 0, behavior: 'smooth' });
