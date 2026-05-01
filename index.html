@@ -9,7 +9,29 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet">
+
+  <script>
+    if (localStorage.getItem('kks_access') === 'true') {
+      document.documentElement.setAttribute('data-unlocked', 'true');
+    }
+  </script>
   <style>
+    [data-unlocked="true"] #course-content {
+      display: block !important;
+    }
+
+    [data-unlocked="true"] .access-section {
+      display: none !important;
+    }
+
+    [data-unlocked="true"] #payment {
+      display: none !important;
+    }
+
+    [data-unlocked="true"] .sticky-cta {
+      display: none !important;
+    }
+
     :root {
       /* Logo-inspired: golden yellow, purple smoke, orange fire */
       --orange: #E8A000;
