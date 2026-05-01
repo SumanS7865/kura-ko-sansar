@@ -11,9 +11,7 @@
     rel="stylesheet">
 
   <script>
-    const _h = window.location.hash;
-    if (localStorage.getItem('kks_access') === 'true' ||
-      (_h && _h === '#' + btoa('kks_granted_2025'))) {
+    if (localStorage.getItem('kks_access') === 'true') {
       document.documentElement.setAttribute('data-unlocked', 'true');
     }
   </script>
@@ -1795,10 +1793,8 @@
     };
 
     function isUnlocked() {
-      const _h = window.location.hash;
       return localStorage.getItem('kks_access') === 'true' ||
-        sessionStorage.getItem('kks_access') === 'true' ||
-        (_h && _h === '#' + btoa('kks_granted_2025'));
+        sessionStorage.getItem('kks_access') === 'true';
     }
 
     function loadVideos() {
@@ -1825,10 +1821,8 @@
     function unlockCourse() {
       localStorage.setItem('kks_access', 'true');
       sessionStorage.setItem('kks_access', 'true');
-      window.location.hash = btoa('kks_granted_2025');
-      showCourse();
       closeModal();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.location.href = window.location.pathname;
     }
 
     // Page load maa check
