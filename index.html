@@ -1842,7 +1842,8 @@
       if (window.location.hash === '#unlocked' ||
         localStorage.getItem('kks_access') === 'true' ||
         sessionStorage.getItem('kks_access') === 'true') {
-        unlockCourse();
+        loadVideos();
+        document.getElementById('course-content').style.display = 'block';
         return;
       }
       const savedPhone = localStorage.getItem('kks_phone');
