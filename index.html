@@ -1760,6 +1760,17 @@
   </footer>
 
   <script>
+
+    // Auto-restore on page load
+    if (localStorage.getItem('kks_access') === 'true') {
+      document.addEventListener('DOMContentLoaded', function () {
+        loadVideos();
+        document.getElementById('course-content').style.display = 'block';
+        document.querySelector('.access-section').style.display = 'none';
+        document.getElementById('payment').style.display = 'none';
+        document.querySelector('.sticky-cta').style.display = 'none';
+      });
+    }
     // ═══════════════════════════════════════════════════════
     // ✏️ SETUP — यहाँ मात्र edit गर्नुस्
     // ═══════════════════════════════════════════════════════
