@@ -11,7 +11,8 @@
     rel="stylesheet">
 
   <script>
-    if (localStorage.getItem('kks_access') === 'true') {
+    if (window.location.hash === '#unlocked' ||
+      localStorage.getItem('kks_access') === 'true') {
       document.documentElement.setAttribute('data-unlocked', 'true');
     }
   </script>
@@ -1821,6 +1822,7 @@
       }
       localStorage.setItem('kks_access', 'true');
       sessionStorage.setItem('kks_access', 'true');
+      window.location.hash = 'unlocked'; // <-- YO THAPNE
     }
 
     function jsonpCheck(phone, callback) {
@@ -1837,7 +1839,8 @@
     }
 
     function checkOnLoad() {
-      if (localStorage.getItem('kks_access') === 'true' ||
+      if (window.location.hash === '#unlocked' ||
+        localStorage.getItem('kks_access') === 'true' ||
         sessionStorage.getItem('kks_access') === 'true') {
         unlockCourse();
         return;
