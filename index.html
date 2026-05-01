@@ -1765,6 +1765,7 @@
     // ═══════════════════════════════════════════════════════
 
     localStorage.removeItem('kks_timer_end');
+    // Note: kks_access intentionally NOT removed on load
 
     // 1. Google Apps Script Web App URL (setup guide तल छ)
     const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzzt80Glyms8UAedEKOaPG7yksOD08vBy1Q9UglsT9u8-M0h0rR__1CxAwB2GaHT-Kl/exec";
@@ -1782,7 +1783,9 @@
       document.getElementById('payment').style.display = 'none';
       document.querySelector('.sticky-cta').style.display = 'none';
       closeModal();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!localStorage.getItem('kks_access')) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
       localStorage.setItem('kks_access', 'true');
       sessionStorage.setItem('kks_access', 'true');
     }
@@ -1801,8 +1804,10 @@
     }
 
     function checkOnLoad() {
-      if (localStorage.getItem('kks_access') === 'true') {
-        unlockCourse(); return;
+      if (localStorage.getItem('kks_access') === 'true' ||
+        sessionStorage.getItem('kks_access') === 'true') {
+        unlockCourse();
+        return;
       }
       const savedPhone = localStorage.getItem('kks_phone');
       if (savedPhone) {
