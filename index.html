@@ -1783,92 +1783,68 @@
   </footer>
 
   <script>
-
-    // Auto-restore on page load
-    if (localStorage.getItem('kks_access') === 'true') {
-      document.addEventListener('DOMContentLoaded', function () {
-        loadVideos();
-        document.getElementById('course-content').style.display = 'block';
-        document.querySelector('.access-section').style.display = 'none';
-        document.getElementById('payment').style.display = 'none';
-        document.querySelector('.sticky-cta').style.display = 'none';
-      });
-    }
-    // ═══════════════════════════════════════════════════════
-    // ✏️ SETUP — यहाँ मात्र edit गर्नुस्
-    // ═══════════════════════════════════════════════════════
-
-    localStorage.removeItem('kks_timer_end');
-    // Note: kks_access intentionally NOT removed on load
-
-    // 1. Google Apps Script Web App URL (setup guide तल छ)
     const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzzt80Glyms8UAedEKOaPG7yksOD08vBy1Q9UglsT9u8-M0h0rR__1CxAwB2GaHT-Kl/exec";
-
-    // 2. Backup password (manual unlock को लागि — buyers लाई पठाउन सकिन्छ)
     const BACKUP_PASSWORD = atob('a2tzMjAyNXZpcmFs');
 
-    // ═══════════════════════════════════════════════════════
-    // UNLOCK FUNCTION — course देखाउने
-    // ═══════════════════════════════════════════════════════
-    function unlockCourse() {
+    const vids = {
+      1: atob('Z2FJNFZTcUtWMms'),
+      2: atob('UVpMV3piYW12ekk'),
+      3: atob('azVlMmd6ZFEtaXc'),
+      4: atob('VWc1WExuZ1h3MUk')
+    };
+
+    function isUnlocked() {
+      return localStorage.getItem('kks_access') === 'true' ||
+        sessionStorage.getItem('kks_access') === 'true' ||
+        window.location.hash === '#unlocked';
+    }
+
+    function loadVideos() {
+      document.querySelectorAll('.video-placeholder').forEach(el => {
+        const ch = el.getAttribute('data-chapter');
+        const id = vids[ch];
+        if (id && !el.querySelector('iframe')) {
+          el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none;"></iframe>`;
+        }
+      });
+    }
+
+    function showCourse() {
       loadVideos();
       document.getElementById('course-content').style.display = 'block';
       document.querySelector('.access-section').style.display = 'none';
       document.getElementById('payment').style.display = 'none';
       document.querySelector('.sticky-cta').style.display = 'none';
-      closeModal();
-      if (!localStorage.getItem('kks_access')) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      // Hide access section inside course too
+      const helpSection = document.querySelector('.access-section');
+      if (helpSection) helpSection.style.display = 'none';
+    }
+
+    function unlockCourse() {
       localStorage.setItem('kks_access', 'true');
       sessionStorage.setItem('kks_access', 'true');
-      window.location.hash = 'unlocked'; // <-- YO THAPNE
+      window.location.hash = 'unlocked';
+      showCourse();
+      closeModal();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function jsonpCheck(phone, callback) {
-      const cbName = 'kks_load_' + Date.now();
-      const script = document.createElement('script');
-      setTimeout(() => { script.remove(); delete window[cbName]; }, 8000);
-      window[cbName] = function (data) {
-        script.remove();
-        delete window[cbName];
-        callback(data);
-      };
-      script.src = SHEET_API_URL + '?phone=' + phone + '&action=submit&callback=' + cbName;
-      document.head.appendChild(script);
-    }
-
-    function checkOnLoad() {
-      if (window.location.hash === '#unlocked' ||
-        localStorage.getItem('kks_access') === 'true' ||
-        sessionStorage.getItem('kks_access') === 'true') {
-        loadVideos();
-        document.getElementById('course-content').style.display = 'block';
-        return;
+    // Page load maa check
+    window.addEventListener('DOMContentLoaded', function () {
+      if (isUnlocked()) {
+        showCourse();
       }
-      const savedPhone = localStorage.getItem('kks_phone');
-      if (savedPhone) {
-        jsonpCheck(savedPhone, function (data) {
-          if (data.approved === true) unlockCourse();
-        });
-      }
-    }
-    checkOnLoad();
+    });
 
-    // ═══════════════════════════════════════════════════════
-    // MANUAL CODE CHECK (backup)
-    // ═══════════════════════════════════════════════════════
     function checkCode() {
       const input = document.getElementById('codeInput').value.trim();
       const err = document.getElementById('errMsg');
       const statusBox = document.getElementById('accessStatus');
 
-      // Backup password check
       if (input === BACKUP_PASSWORD) {
         unlockCourse(); return;
       }
 
-      // Phone number check — 10 digits भएमा Sheet मा check गर्ने
       const digitsOnly = input.replace(/\D/g, '');
       if (digitsOnly.length >= 10) {
         const btn = document.querySelector('.access-btn');
@@ -1909,13 +1885,11 @@
             statusBox.innerHTML = '⏳ Payment confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
           }
         };
-
         script.src = SHEET_API_URL + '?phone=' + digitsOnly + '&callback=' + cbName;
         document.head.appendChild(script);
         return;
       }
 
-      // Neither password nor phone
       err.style.display = 'block';
       document.getElementById('codeInput').style.borderColor = 'red';
       setTimeout(() => {
@@ -1924,13 +1898,15 @@
       }, 3000);
     }
 
-    document.getElementById('codeInput').addEventListener('keypress', e => {
-      if (e.key === 'Enter') checkCode();
+    document.addEventListener('DOMContentLoaded', function () {
+      const codeInput = document.getElementById('codeInput');
+      if (codeInput) {
+        codeInput.addEventListener('keypress', e => {
+          if (e.key === 'Enter') checkCode();
+        });
+      }
     });
 
-    // ═══════════════════════════════════════════════════════
-    // GOOGLE SHEET PHONE CHECK
-    // ═══════════════════════════════════════════════════════
     function submitPhone() {
       const phone = document.getElementById('phoneInput').value.trim().replace(/\D/g, '');
       const status = document.getElementById('phoneStatus');
@@ -1946,59 +1922,47 @@
         return;
       }
 
-      // Loading state
       btn.disabled = true;
       btn.innerHTML = '⏳ Checking...';
       status.style.display = 'none';
-      document.getElementById('phoneInput').style.borderColor = 'rgba(255,215,0,0.5)';
-
-      // JSONP use गर्ने — CORS problem हुँदैन
       localStorage.setItem('kks_phone', phone);
 
       const callbackName = 'kks_cb_' + Date.now();
       const script = document.createElement('script');
       const timeoutId = setTimeout(() => {
-        script.remove();
-        delete window[callbackName];
+        script.remove(); delete window[callbackName];
         status.style.display = 'block';
         status.style.background = 'rgba(255,68,68,0.1)';
         status.style.border = '1px solid rgba(255,68,68,0.3)';
         status.style.color = '#ff6666';
-        status.innerHTML = '⚠️ Connection failed। फेरि try गर्नुस् वा WhatsApp मा सम्पर्क गर्नुस्।';
+        status.innerHTML = '⚠️ Connection failed। WhatsApp मा सम्पर्क गर्नुस्।';
         btn.disabled = false;
         btn.innerHTML = '🔍 Check गर्नुस्';
       }, 10000);
 
       window[callbackName] = function (data) {
-        clearTimeout(timeoutId);
-        script.remove();
-        delete window[callbackName];
-
+        clearTimeout(timeoutId); script.remove(); delete window[callbackName];
         if (data.approved === true) {
           status.style.display = 'block';
           status.style.background = 'rgba(96,187,70,0.15)';
           status.style.border = '1px solid rgba(96,187,70,0.4)';
           status.style.color = '#60BB46';
           status.innerHTML = '✅ Payment verified! Unlocking...';
-          setTimeout(() => { unlockCourse(); }, 1200);
+          setTimeout(() => unlockCourse(), 1200);
         } else {
           status.style.display = 'block';
           status.style.background = 'rgba(232,160,0,0.1)';
           status.style.border = '1px solid rgba(255,215,0,0.3)';
           status.style.color = 'var(--gold)';
-          status.innerHTML = '⏳ Payment अझै confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
+          status.innerHTML = '⏳ Payment confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
           btn.disabled = false;
           btn.innerHTML = '🔍 फेरि Check गर्नुस्';
         }
       };
-
       script.src = SHEET_API_URL + '?phone=' + phone + '&action=submit&callback=' + callbackName;
       document.head.appendChild(script);
     }
 
-    // ═══════════════════════════════════════════════════════
-    // MODAL CONTROLS
-    // ═══════════════════════════════════════════════════════
     function openModal() {
       document.getElementById('esewaModal').classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -2018,18 +1982,21 @@
       document.getElementById('phoneInput').focus();
     }
 
-    document.getElementById('esewaModal').addEventListener('click', function (e) {
-      if (e.target === this) closeModal();
+    document.addEventListener('DOMContentLoaded', function () {
+      const modal = document.getElementById('esewaModal');
+      if (modal) {
+        modal.addEventListener('click', function (e) {
+          if (e.target === this) closeModal();
+        });
+      }
+      const phoneInput = document.getElementById('phoneInput');
+      if (phoneInput) {
+        phoneInput.addEventListener('keypress', e => {
+          if (e.key === 'Enter') submitPhone();
+        });
+      }
     });
 
-    // Enter key on phone input
-    document.getElementById('phoneInput') && document.getElementById('phoneInput').addEventListener('keypress', e => {
-      if (e.key === 'Enter') submitPhone();
-    });
-
-    // ═══════════════════════════════════════════════════════
-    // COPY PROMPT
-    // ═══════════════════════════════════════════════════════
     function copyPrompt() {
       const text = document.getElementById('masterPrompt').innerText;
       navigator.clipboard.writeText(text).then(() => {
@@ -2043,15 +2010,15 @@
       });
     }
 
-    // ═══════════════════════════════════════════════════════
-    // SCROLL FADE-IN
-    // ═══════════════════════════════════════════════════════
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); }
+    function copyPrompt2() {
+      const text = document.getElementById('masterPrompt2').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyBtn2');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2500);
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    }
+
     function toggleLesson(header) {
       const body = header.nextElementSibling;
       const arrow = header.querySelector('.toggle-arrow');
@@ -2063,6 +2030,7 @@
         arrow.classList.remove('open');
       }
     }
+
     function togglePrompt(header) {
       const body = header.nextElementSibling;
       const arrow = header.querySelector('.toggle-arrow');
@@ -2075,31 +2043,14 @@
       }
     }
 
-    function copyPrompt2() {
-      const text = document.getElementById('masterPrompt2').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copyBtn2');
-        btn.textContent = '✅ Copied!';
-        setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2500);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
       });
-    }
-    const vids = {
-      1: atob('Z2FJNFZTcUtWMms'),
-      2: atob('UVpMV3piYW12ekk'),
-      3: atob('azVlMmd6ZFEtaXc'),
-      4: atob('VWc1WExuZ1h3MUk')
-    };
-
-    function loadVideos() {
-      document.querySelectorAll('.video-placeholder').forEach(el => {
-        const ch = el.getAttribute('data-chapter');
-        const id = vids[ch];
-        if (id) {
-          el.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0" allowfullscreen style="width:100%;aspect-ratio:16/9;border-radius:12px;border:none;"></iframe>`;
-        }
-      });
-    }
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
+
 </body>
 
 </html>
