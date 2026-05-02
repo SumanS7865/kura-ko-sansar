@@ -1532,7 +1532,7 @@
      COURSE CONTENT (UNLOCKED)
 ════════════════════════════════════ -->
   <div id="course-content">
-    <div
+    <div id="welcome-banner"
       style="background:linear-gradient(135deg,rgba(232,160,0,0.08),rgba(107,33,168,0.08)); border-top:1px solid rgba(255,215,0,0.2); border-bottom:1px solid rgba(255,215,0,0.2); padding:24px; text-align:center; margin-bottom:20px;">
       <p style="font-size:1.1em; font-weight:800; color:var(--gold)">🎉 Welcome! तपाईंको Course Unlock भयो।</p>
       <p style="font-size:0.85em; color:var(--text-muted); margin-top:6px">Password share नगर्नुस् — यो तपाईंको personal
@@ -1815,16 +1815,20 @@
       document.querySelector('.access-section').style.display = 'none';
       document.getElementById('payment').style.display = 'none';
       document.querySelector('.sticky-cta').style.display = 'none';
-      // Hide access section inside course too
       const helpSection = document.querySelector('.access-section');
       if (helpSection) helpSection.style.display = 'none';
+
+      setTimeout(() => {
+        const banner = document.getElementById('welcome-banner');
+        if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 400);
     }
 
     function unlockCourse() {
       localStorage.setItem('kks_access', 'true');
       sessionStorage.setItem('kks_access', 'true');
       closeModal();
-      window.location.href = window.location.pathname;
+      window.location.href = window.location.pathname + '#welcome';
     }
 
     // Page load maa check
