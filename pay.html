@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ne">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Join — Kura Ko Sansar</title>
+  <link rel="icon" type="image/jpeg" href="https://i.imgur.com/ZZGkqJx.jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #04030A;
+      color: #F5F0E8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 40px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 24px rgba(255, 215, 0, 0.25);
+      margin-bottom: 12px;
+      margin-top: 8px;
+    }
+
+    .brand {
+      font-size: 0.75em;
+      color: #9B8FB5;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* CARD */
+    .card {
+      background: #100D1E;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 20px;
+      padding: 24px 20px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 1.05em;
+      font-weight: 900;
+      color: #FFD700;
+      margin-bottom: 6px;
+    }
+
+    .card-sub {
+      font-size: 0.82em;
+      color: #9B8FB5;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    /* PRICE */
+    .price-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .price-main {
+      font-size: 2.4em;
+      font-weight: 900;
+      color: #FFD700;
+      line-height: 1;
+    }
+
+    .price-old {
+      font-size: 0.85em;
+      color: #9B8FB5;
+      text-decoration: line-through;
+    }
+
+    .price-badge {
+      background: rgba(255, 215, 0, 0.12);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 0.7em;
+      font-weight: 800;
+      color: #FFD700;
+    }
+
+    /* ESEWA BOX */
+    .esewa-box {
+      background: #050312;
+      border: 2px dashed rgba(96, 187, 70, 0.5);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .esewa-label {
+      font-size: 0.7em;
+      color: #9B8FB5;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .esewa-number {
+      font-size: 1.8em;
+      font-weight: 900;
+      color: #60BB46;
+      letter-spacing: 3px;
+    }
+
+    .esewa-name {
+      font-size: 0.78em;
+      color: #9B8FB5;
+      margin-top: 4px;
+    }
+
+    /* STEP */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.85em;
+      line-height: 1.5;
+      color: #D4C5F0;
+    }
+
+    .step-num {
+      background: rgba(255, 215, 0, 0.12);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #FFD700;
+      font-weight: 900;
+      font-size: 0.78em;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* WARNING */
+    .warning {
+      background: rgba(255, 100, 0, 0.08);
+      border: 1px solid rgba(255, 100, 0, 0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.8em;
+      color: #FFA07A;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* BUTTONS */
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05em;
+      font-weight: 900;
+      padding: 16px;
+      border-radius: 14px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(37, 211, 102, 0.3);
+      transition: all 0.2s;
+      margin-bottom: 10px;
+    }
+
+    .btn-wa:active {
+      transform: scale(0.98);
+    }
+
+    .btn-course {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: transparent;
+      color: #9B8FB5;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88em;
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      border: 1px solid #333;
+      transition: all 0.2s;
+    }
+
+    .btn-course:active {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* DIVIDER */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 10px;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .divider-text {
+      font-size: 0.72em;
+      color: #9B8FB5;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    /* UNLOCK SECTION */
+    .unlock-card {
+      background: #0A0814;
+      border: 1px solid rgba(107, 33, 168, 0.35);
+      border-radius: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 14px;
+    }
+
+    .unlock-title {
+      font-size: 0.88em;
+      font-weight: 800;
+      color: #C084FC;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .unlock-input {
+      width: 100%;
+      background: #100D1E;
+      border: 1px solid rgba(107, 33, 168, 0.4);
+      color: #F5F0E8;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 1.05em;
+      font-family: 'Nunito', sans-serif;
+      text-align: center;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .unlock-input:focus {
+      border-color: #FFD700;
+    }
+
+    .btn-unlock {
+      width: 100%;
+      background: linear-gradient(135deg, #B8860B, #FFD700);
+      color: #04030A;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1em;
+      font-weight: 900;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-unlock:active {
+      transform: scale(0.98);
+    }
+
+    .status-msg {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.82em;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .footer-note {
+      font-size: 0.72em;
+      color: #9B8FB5;
+      text-align: center;
+      max-width: 360px;
+      line-height: 1.6;
+    }
+
+    .footer-note a {
+      color: #FFD700;
+      text-decoration: none;
+    }
+
+    /* BOUNCE ANIMATION */
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .bounce {
+      animation: bounce 2s infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+  <img src="https://i.imgur.com/ZZGkqJx.jpeg" alt="Logo" class="logo">
+  <div class="brand">Kura Ko Sansar</div>
+
+  <!-- PRICE CARD -->
+  <div class="card">
+    <div class="card-title">🎬 Viral Object Video Course</div>
+    <div class="card-sub">Free AI tools मात्र। Viral video बनाउनुस् → Page grow → Dollar कमाउनुस् 🌍</div>
+
+    <div class="price-row">
+      <div>
+        <div class="price-old">NPR 499</div>
+        <div class="price-main">NPR 149</div>
+      </div>
+      <div class="price-badge">🔥 Launch Offer</div>
+    </div>
+
+    <!-- ESEWA NUMBER -->
+    <div class="esewa-box">
+      <div class="esewa-label">eSewa Number</div>
+      <div class="esewa-number">9846946584</div>
+      <div class="esewa-name">Kura Ko Sansar</div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>eSewa App खोल्नुस् → <strong style="color:#60BB46">Send Money</strong> → Number: <strong
+            style="color:#60BB46">9846946584</strong> → Amount: <strong style="color:#FFD700">NPR 149</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>Remarks मा <strong style="color:#FFA07A">आफ्नो Phone Number</strong> लेख्नुस् — यो important छ!</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>तलको <strong style="color:#25D366">WhatsApp button</strong> थिच्नुस् → screenshot पठाउनुस् → Access पाउनुस्
+        </div>
+      </div>
+    </div>
+
+    <div class="warning">
+      ⚠️ Remarks मा phone number नलेखेको खण्डमा verify गर्न गाह्रो हुन्छ!
+    </div>
+
+    <!-- WHATSAPP BUTTON -->
+    <a class="btn-wa bounce"
+      href="https://wa.me/9779821438014?text=Hello%20sir!%20%F0%9F%99%8F%0A%0AMaile%20NPR%20149%20eSewa%20ma%20pathaiyo%20%F0%9F%92%9A%0A%0AKripaya%20mero%20course%20access%20dinus%20%F0%9F%A5%B9%0A%0AMero%20number%3A%20"
+      target="_blank">
+      💬 WhatsApp ma Screenshot Pathaunu
+    </a>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-text">वा</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <a class="btn-course" href="https://kurakosansar.vercel.app" target="_blank">
+      🌐 Full Course Page हेर्नुस्
+    </a>
+  </div>
+
+  <!-- ALREADY PAID? UNLOCK -->
+  <div class="unlock-card">
+    <div class="unlock-title">✅ पहिले Payment गर्नुभएको छ?</div>
+    <input type="tel" class="unlock-input" id="phoneInput" placeholder="98XXXXXXXX" maxlength="10">
+    <button class="btn-unlock" onclick="checkAccess()">🔓 Unlock गर्नुस्</button>
+    <div class="status-msg" id="statusMsg"></div>
+  </div>
+
+  <div class="footer-note">
+    Support चाहिएमा:
+    <a href="https://wa.me/9779821438014">WhatsApp: 9821438014</a>
+    &nbsp;|&nbsp;
+    <a href="tel:9846946584">Call: 9846946584</a>
+  </div>
+
+  <script>
+    const SHEET_API = "https://script.google.com/macros/s/AKfycbzzt80Glyms8UAedEKOaPG7yksOD08vBy1Q9UglsT9u8-M0h0rR__1CxAwB2GaHT-Kl/exec";
+    const BACKUP = atob('a2tzMjAyNXZpcmFs');
+
+    document.getElementById('phoneInput').addEventListener('keypress', e => {
+      if (e.key === 'Enter') checkAccess();
+    });
+
+    function showStatus(msg, type) {
+      const el = document.getElementById('statusMsg');
+      el.style.display = 'block';
+      el.innerHTML = msg;
+      if (type === 'ok') {
+        el.style.background = 'rgba(96,187,70,0.12)';
+        el.style.border = '1px solid rgba(96,187,70,0.35)';
+        el.style.color = '#60BB46';
+      } else if (type === 'wait') {
+        el.style.background = 'rgba(255,215,0,0.08)';
+        el.style.border = '1px solid rgba(255,215,0,0.25)';
+        el.style.color = '#FFD700';
+      } else {
+        el.style.background = 'rgba(255,68,68,0.08)';
+        el.style.border = '1px solid rgba(255,68,68,0.3)';
+        el.style.color = '#ff6666';
+      }
+    }
+
+    function unlockAndGo() {
+      localStorage.setItem('kks_access', 'true');
+      sessionStorage.setItem('kks_access', 'true');
+      showStatus('✅ Verified! Course page ma redirect hudai xa...', 'ok');
+      setTimeout(() => {
+        window.location.href = 'https://kurakosansar.vercel.app';
+      }, 1200);
+    }
+
+    function checkAccess() {
+      const raw = document.getElementById('phoneInput').value.trim();
+      const btn = document.querySelector('.btn-unlock');
+
+      if (raw === BACKUP) { unlockAndGo(); return; }
+
+      const phone = raw.replace(/\D/g, '');
+      if (phone.length < 10) {
+        showStatus('❌ Valid phone number enter garnus (10 digits)', 'err');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '⏳ Checking...';
+      showStatus('⏳ Payment verify gardai xa...', 'wait');
+
+      const cb = 'kks_' + Date.now();
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => {
+        script.remove(); delete window[cb];
+        btn.disabled = false; btn.textContent = '🔓 Unlock गर्नुस्';
+        showStatus('⚠️ Connection error — WhatsApp ma message garnus', 'err');
+      }, 10000);
+
+      window[cb] = function (data) {
+        clearTimeout(timeout); script.remove(); delete window[cb];
+        btn.disabled = false; btn.textContent = '🔓 Unlock गर्नुस्';
+        if (data.approved === true) {
+          unlockAndGo();
+        } else {
+          showStatus('⏳ Payment confirm bhako chaina. Kehi minute pachhi try garnus ya WhatsApp garnus.', 'wait');
+        }
+      };
+
+      script.src = SHEET_API + '?phone=' + phone + '&callback=' + cb;
+      document.head.appendChild(script);
+    }
+  </script>
+</body>
+
+</html>
