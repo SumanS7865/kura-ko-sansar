@@ -366,7 +366,9 @@
     <!-- ESEWA NUMBER -->
     <div class="esewa-box">
       <div class="esewa-label">eSewa Number</div>
-      <div class="esewa-number">9846946584</div>
+      <div class="esewa-number" onclick="copyNumber(this)" style="cursor:pointer;" title="Tap to copy">
+        9846946584 📋
+      </div>
       <div class="esewa-name">Kura Ko Sansar</div>
     </div>
 
@@ -497,6 +499,17 @@
 
       script.src = SHEET_API + '?phone=' + phone + '&callback=' + cb;
       document.head.appendChild(script);
+    }
+
+    function copyNumber(el) {
+      navigator.clipboard.writeText('9846946584').then(() => {
+        el.innerHTML = '✅ Copied!';
+        el.style.color = '#FFD700';
+        setTimeout(() => {
+          el.innerHTML = '9846946584 📋';
+          el.style.color = '#60BB46';
+        }, 2000);
+      });
     }
   </script>
 </body>
