@@ -1821,236 +1821,235 @@
       setTimeout(() => {
         const banner = document.getElementById('welcome-banner');
         if (banner) banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 400);
-    }
+      }, 900);
 
-    function unlockCourse() {
-      localStorage.setItem('kks_access', 'true');
-      sessionStorage.setItem('kks_access', 'true');
-      closeModal();
-      window.location.href = window.location.pathname + '#welcome';
-    }
-
-    // Page load maa check
-    window.addEventListener('DOMContentLoaded', function () {
-      if (isUnlocked()) {
-        showCourse();
-      }
-    });
-
-    function checkCode() {
-      const input = document.getElementById('codeInput').value.trim();
-      const err = document.getElementById('errMsg');
-      const statusBox = document.getElementById('accessStatus');
-
-      if (input === BACKUP_PASSWORD) {
-        unlockCourse(); return;
+      function unlockCourse() {
+        localStorage.setItem('kks_access', 'true');
+        sessionStorage.setItem('kks_access', 'true');
+        closeModal();
+        window.location.href = window.location.pathname + '#welcome';
       }
 
-      const digitsOnly = input.replace(/\D/g, '');
-      if (digitsOnly.length >= 10) {
-        const btn = document.querySelector('.access-btn');
-        btn.textContent = '⏳ Checking...';
+      // Page load maa check
+      window.addEventListener('DOMContentLoaded', function () {
+        if (isUnlocked()) {
+          showCourse();
+        }
+      });
+
+      function checkCode() {
+        const input = document.getElementById('codeInput').value.trim();
+        const err = document.getElementById('errMsg');
+        const statusBox = document.getElementById('accessStatus');
+
+        if (input === BACKUP_PASSWORD) {
+          unlockCourse(); return;
+        }
+
+        const digitsOnly = input.replace(/\D/g, '');
+        if (digitsOnly.length >= 10) {
+          const btn = document.querySelector('.access-btn');
+          btn.textContent = '⏳ Checking...';
+          btn.disabled = true;
+          statusBox.style.display = 'block';
+          statusBox.style.background = 'rgba(255,215,0,0.1)';
+          statusBox.style.border = '1px solid rgba(255,215,0,0.3)';
+          statusBox.style.color = 'var(--gold)';
+          statusBox.innerHTML = '⏳ Checking payment...';
+
+          localStorage.setItem('kks_phone', digitsOnly);
+
+          const cbName = 'kks_access_' + Date.now();
+          const script = document.createElement('script');
+          const timeoutId = setTimeout(() => {
+            script.remove(); delete window[cbName];
+            btn.textContent = 'Unlock 🔓'; btn.disabled = false;
+            statusBox.style.background = 'rgba(255,68,68,0.1)';
+            statusBox.style.border = '1px solid rgba(255,68,68,0.3)';
+            statusBox.style.color = '#ff6666';
+            statusBox.innerHTML = '⚠️ Connection error — WhatsApp मा सम्पर्क गर्नुस्';
+          }, 10000);
+
+          window[cbName] = function (data) {
+            clearTimeout(timeoutId); script.remove(); delete window[cbName];
+            btn.textContent = 'Unlock 🔓'; btn.disabled = false;
+            if (data.approved === true) {
+              statusBox.style.background = 'rgba(96,187,70,0.15)';
+              statusBox.style.border = '1px solid rgba(96,187,70,0.4)';
+              statusBox.style.color = '#60BB46';
+              statusBox.innerHTML = '✅ Verified! Unlocking...';
+              setTimeout(() => unlockCourse(), 1000);
+            } else {
+              statusBox.style.background = 'rgba(255,215,0,0.1)';
+              statusBox.style.border = '1px solid rgba(255,215,0,0.3)';
+              statusBox.style.color = 'var(--gold)';
+              statusBox.innerHTML = '⏳ Payment confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
+            }
+          };
+          script.src = SHEET_API_URL + '?phone=' + digitsOnly + '&callback=' + cbName;
+          document.head.appendChild(script);
+          return;
+        }
+
+        err.style.display = 'block';
+        document.getElementById('codeInput').style.borderColor = 'red';
+        setTimeout(() => {
+          err.style.display = 'none';
+          document.getElementById('codeInput').style.borderColor = '';
+        }, 3000);
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const codeInput = document.getElementById('codeInput');
+        if (codeInput) {
+          codeInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') checkCode();
+          });
+        }
+      });
+
+      function submitPhone() {
+        const phone = document.getElementById('phoneInput').value.trim().replace(/\D/g, '');
+        const status = document.getElementById('phoneStatus');
+        const btn = document.getElementById('submitPhoneBtn');
+
+        if (phone.length < 10) {
+          document.getElementById('phoneInput').style.borderColor = 'red';
+          status.style.display = 'block';
+          status.style.background = 'rgba(255,68,68,0.1)';
+          status.style.border = '1px solid rgba(255,68,68,0.3)';
+          status.style.color = '#ff6666';
+          status.innerHTML = '❌ Valid phone number enter गर्नुस् (10 digits)';
+          return;
+        }
+
         btn.disabled = true;
-        statusBox.style.display = 'block';
-        statusBox.style.background = 'rgba(255,215,0,0.1)';
-        statusBox.style.border = '1px solid rgba(255,215,0,0.3)';
-        statusBox.style.color = 'var(--gold)';
-        statusBox.innerHTML = '⏳ Checking payment...';
+        btn.innerHTML = '⏳ Checking...';
+        status.style.display = 'none';
+        localStorage.setItem('kks_phone', phone);
 
-        localStorage.setItem('kks_phone', digitsOnly);
-
-        const cbName = 'kks_access_' + Date.now();
+        const callbackName = 'kks_cb_' + Date.now();
         const script = document.createElement('script');
         const timeoutId = setTimeout(() => {
-          script.remove(); delete window[cbName];
-          btn.textContent = 'Unlock 🔓'; btn.disabled = false;
-          statusBox.style.background = 'rgba(255,68,68,0.1)';
-          statusBox.style.border = '1px solid rgba(255,68,68,0.3)';
-          statusBox.style.color = '#ff6666';
-          statusBox.innerHTML = '⚠️ Connection error — WhatsApp मा सम्पर्क गर्नुस्';
+          script.remove(); delete window[callbackName];
+          status.style.display = 'block';
+          status.style.background = 'rgba(255,68,68,0.1)';
+          status.style.border = '1px solid rgba(255,68,68,0.3)';
+          status.style.color = '#ff6666';
+          status.innerHTML = '⚠️ Connection failed। WhatsApp मा सम्पर्क गर्नुस्।';
+          btn.disabled = false;
+          btn.innerHTML = '🔍 Check गर्नुस्';
         }, 10000);
 
-        window[cbName] = function (data) {
-          clearTimeout(timeoutId); script.remove(); delete window[cbName];
-          btn.textContent = 'Unlock 🔓'; btn.disabled = false;
+        window[callbackName] = function (data) {
+          clearTimeout(timeoutId); script.remove(); delete window[callbackName];
           if (data.approved === true) {
-            statusBox.style.background = 'rgba(96,187,70,0.15)';
-            statusBox.style.border = '1px solid rgba(96,187,70,0.4)';
-            statusBox.style.color = '#60BB46';
-            statusBox.innerHTML = '✅ Verified! Unlocking...';
-            setTimeout(() => unlockCourse(), 1000);
+            status.style.display = 'block';
+            status.style.background = 'rgba(96,187,70,0.15)';
+            status.style.border = '1px solid rgba(96,187,70,0.4)';
+            status.style.color = '#60BB46';
+            status.innerHTML = '✅ Payment verified! Unlocking...';
+            setTimeout(() => unlockCourse(), 1200);
           } else {
-            statusBox.style.background = 'rgba(255,215,0,0.1)';
-            statusBox.style.border = '1px solid rgba(255,215,0,0.3)';
-            statusBox.style.color = 'var(--gold)';
-            statusBox.innerHTML = '⏳ Payment confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
+            status.style.display = 'block';
+            status.style.background = 'rgba(232,160,0,0.1)';
+            status.style.border = '1px solid rgba(255,215,0,0.3)';
+            status.style.color = 'var(--gold)';
+            status.innerHTML = '⏳ Payment confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
+            btn.disabled = false;
+            btn.innerHTML = '🔍 फेरि Check गर्नुस्';
           }
         };
-        script.src = SHEET_API_URL + '?phone=' + digitsOnly + '&callback=' + cbName;
+        script.src = SHEET_API_URL + '?phone=' + phone + '&action=submit&callback=' + callbackName;
         document.head.appendChild(script);
-        return;
       }
 
-      err.style.display = 'block';
-      document.getElementById('codeInput').style.borderColor = 'red';
-      setTimeout(() => {
-        err.style.display = 'none';
-        document.getElementById('codeInput').style.borderColor = '';
-      }, 3000);
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const codeInput = document.getElementById('codeInput');
-      if (codeInput) {
-        codeInput.addEventListener('keypress', e => {
-          if (e.key === 'Enter') checkCode();
-        });
+      function openModal() {
+        document.getElementById('esewaModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        showStep1();
       }
-    });
-
-    function submitPhone() {
-      const phone = document.getElementById('phoneInput').value.trim().replace(/\D/g, '');
-      const status = document.getElementById('phoneStatus');
-      const btn = document.getElementById('submitPhoneBtn');
-
-      if (phone.length < 10) {
-        document.getElementById('phoneInput').style.borderColor = 'red';
-        status.style.display = 'block';
-        status.style.background = 'rgba(255,68,68,0.1)';
-        status.style.border = '1px solid rgba(255,68,68,0.3)';
-        status.style.color = '#ff6666';
-        status.innerHTML = '❌ Valid phone number enter गर्नुस् (10 digits)';
-        return;
+      function closeModal() {
+        document.getElementById('esewaModal').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      function showStep1() {
+        document.getElementById('modalStep1').style.display = 'block';
+        document.getElementById('modalStep2').style.display = 'none';
+      }
+      function showStep2() {
+        document.getElementById('modalStep1').style.display = 'none';
+        document.getElementById('modalStep2').style.display = 'block';
+        document.getElementById('phoneInput').focus();
       }
 
-      btn.disabled = true;
-      btn.innerHTML = '⏳ Checking...';
-      status.style.display = 'none';
-      localStorage.setItem('kks_phone', phone);
-
-      const callbackName = 'kks_cb_' + Date.now();
-      const script = document.createElement('script');
-      const timeoutId = setTimeout(() => {
-        script.remove(); delete window[callbackName];
-        status.style.display = 'block';
-        status.style.background = 'rgba(255,68,68,0.1)';
-        status.style.border = '1px solid rgba(255,68,68,0.3)';
-        status.style.color = '#ff6666';
-        status.innerHTML = '⚠️ Connection failed। WhatsApp मा सम्पर्क गर्नुस्।';
-        btn.disabled = false;
-        btn.innerHTML = '🔍 Check गर्नुस्';
-      }, 10000);
-
-      window[callbackName] = function (data) {
-        clearTimeout(timeoutId); script.remove(); delete window[callbackName];
-        if (data.approved === true) {
-          status.style.display = 'block';
-          status.style.background = 'rgba(96,187,70,0.15)';
-          status.style.border = '1px solid rgba(96,187,70,0.4)';
-          status.style.color = '#60BB46';
-          status.innerHTML = '✅ Payment verified! Unlocking...';
-          setTimeout(() => unlockCourse(), 1200);
-        } else {
-          status.style.display = 'block';
-          status.style.background = 'rgba(232,160,0,0.1)';
-          status.style.border = '1px solid rgba(255,215,0,0.3)';
-          status.style.color = 'var(--gold)';
-          status.innerHTML = '⏳ Payment confirm भएको छैन। केही मिनेट पछि फेरि try गर्नुस्।';
-          btn.disabled = false;
-          btn.innerHTML = '🔍 फेरि Check गर्नुस्';
+      document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('esewaModal');
+        if (modal) {
+          modal.addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+          });
         }
-      };
-      script.src = SHEET_API_URL + '?phone=' + phone + '&action=submit&callback=' + callbackName;
-      document.head.appendChild(script);
-    }
+        const phoneInput = document.getElementById('phoneInput');
+        if (phoneInput) {
+          phoneInput.addEventListener('keypress', e => {
+            if (e.key === 'Enter') submitPhone();
+          });
+        }
+      });
 
-    function openModal() {
-      document.getElementById('esewaModal').classList.add('active');
-      document.body.style.overflow = 'hidden';
-      showStep1();
-    }
-    function closeModal() {
-      document.getElementById('esewaModal').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-    function showStep1() {
-      document.getElementById('modalStep1').style.display = 'block';
-      document.getElementById('modalStep2').style.display = 'none';
-    }
-    function showStep2() {
-      document.getElementById('modalStep1').style.display = 'none';
-      document.getElementById('modalStep2').style.display = 'block';
-      document.getElementById('phoneInput').focus();
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const modal = document.getElementById('esewaModal');
-      if (modal) {
-        modal.addEventListener('click', function (e) {
-          if (e.target === this) closeModal();
+      function copyPrompt() {
+        const text = document.getElementById('masterPrompt').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.getElementById('copyBtn');
+          btn.textContent = '✅ Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = '📋 Copy Prompt';
+            btn.classList.remove('copied');
+          }, 2500);
         });
       }
-      const phoneInput = document.getElementById('phoneInput');
-      if (phoneInput) {
-        phoneInput.addEventListener('keypress', e => {
-          if (e.key === 'Enter') submitPhone();
+
+      function copyPrompt2() {
+        const text = document.getElementById('masterPrompt2').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const btn = document.getElementById('copyBtn2');
+          btn.textContent = '✅ Copied!';
+          setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2500);
         });
       }
-    });
 
-    function copyPrompt() {
-      const text = document.getElementById('masterPrompt').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copyBtn');
-        btn.textContent = '✅ Copied!';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = '📋 Copy Prompt';
-          btn.classList.remove('copied');
-        }, 2500);
-      });
-    }
-
-    function copyPrompt2() {
-      const text = document.getElementById('masterPrompt2').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('copyBtn2');
-        btn.textContent = '✅ Copied!';
-        setTimeout(() => { btn.textContent = '📋 Copy Prompt'; }, 2500);
-      });
-    }
-
-    function toggleLesson(header) {
-      const body = header.nextElementSibling;
-      const arrow = header.querySelector('.toggle-arrow');
-      if (body.style.display === 'none') {
-        body.style.display = 'block';
-        arrow.classList.add('open');
-      } else {
-        body.style.display = 'none';
-        arrow.classList.remove('open');
+      function toggleLesson(header) {
+        const body = header.nextElementSibling;
+        const arrow = header.querySelector('.toggle-arrow');
+        if (body.style.display === 'none') {
+          body.style.display = 'block';
+          arrow.classList.add('open');
+        } else {
+          body.style.display = 'none';
+          arrow.classList.remove('open');
+        }
       }
-    }
 
-    function togglePrompt(header) {
-      const body = header.nextElementSibling;
-      const arrow = header.querySelector('.toggle-arrow');
-      if (body.style.display === 'none') {
-        body.style.display = 'block';
-        arrow.classList.add('open');
-      } else {
-        body.style.display = 'none';
-        arrow.classList.remove('open');
+      function togglePrompt(header) {
+        const body = header.nextElementSibling;
+        const arrow = header.querySelector('.toggle-arrow');
+        if (body.style.display === 'none') {
+          body.style.display = 'block';
+          arrow.classList.add('open');
+        } else {
+          body.style.display = 'none';
+          arrow.classList.remove('open');
+        }
       }
-    }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('visible'); }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
   </script>
 
 </body>
